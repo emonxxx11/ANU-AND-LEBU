@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>I AM WAITING FOR YOU 🥺</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column-reverse; /* Heading at the bottom */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #000; /* Black background */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      overflow: hidden; /* Hide overflow for rain */
+      color: #ff69b4; /* Pink text */
+    }
+
+    .slider-container {
+      width: 300px;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(255,105,180,0.5);
+      z-index: 1; /* Above rain */
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .timer {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ff69b4;
+      text-align: center;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 3em;
+      font-weight: bold;
+      color: #ff69b4;
+      margin: 20px 0;
+      z-index: 1;
+    }
+
+    /* Rain particle styles */
+    .rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .drop {
+      position: absolute;
+      width: 2px;
+      height: 10px;
+      background: #ff69b4;
+      opacity: 0.5;
+      animation: fall 1s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="rain" id="rain"></div>
+
+<div class="slider-container">
+  <div class="slide active">
+    <img src="https://files.catbox.moe/hepgbn.jpg" alt="Slide 1">
+  </div>
+  <div class="slide">
+    <img src="https://files.catbox.moe/wimzem.jpg" alt="Slide 2">
+  </div>
+  <div class="slide">
+    <img src="https://files.catbox.moe/ferrdp.jpg" alt="Slide 3">
+  </div>
+</div>
+
+<div class="timer" id="countdown"></div>
+
+<h1>I AM WAITING FOR YOU 🥺</h1>
+
+<script>
+  // Auto Slide Change
+  let slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+
+  setInterval(() => {
+    slides[currentSlide].classList.remove('active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('active');
+  }, 3000); // change every 3 seconds
+
+  // Countdown Timer to April 8, 2028 at 12:00 AM
+  const countdown = document.getElementById('countdown');
+  const targetDate = new Date('April 8, 2028 00:00:00').getTime();
+
+  setInterval(() => {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance < 0) {
+      countdown.innerHTML = "🎉 It's time! 🎉";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdown.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
+
+  // Create Rain Particles
+  const rain = document.getElementById('rain');
+  for (let i = 0; i < 100; i++) {
+    const drop = document.createElement('div');
+    drop.classList.add('drop');
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (0.5 + Math.random() * 1.5) + 's';
+    drop.style.animationDelay = Math.random() * 5 + 's';
+    rain.appendChild(drop);
+  }
+</script>
+
+</body>
+</html>
